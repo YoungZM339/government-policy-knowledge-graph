@@ -94,7 +94,7 @@
             <!--Brand logo & name-->
             <!--================================-->
             <div class="navbar-header">
-                <a href="{{ url_for('index') }}" class="navbar-brand">
+                <a href="/search" class="navbar-brand">
                     <img src="../static/images/logo.jpg" alt="Nifty Logo" class="brand-icon">
                     <div class="brand-title">
                         <span class="brand-text">HAUT-AI</span>
@@ -222,7 +222,7 @@
 
                                 <!--Menu list item-->
                                 <li>
-                                    <a href="{{ url_for('search') }}">
+                                    <a href="/search">
                                         <i class="fa fa-search" style="width:24px"></i>
                                         <span class="menu-title">
                                                 <strong>检索政策关系</strong>
@@ -233,7 +233,7 @@
 
                                 </li>
                                 <li>
-                                    <a href="{{ url_for('all_relation') }}">
+                                    <a href="/all_relation">
                                         <i class="fa fa-pie-chart" style="width:24px"></i>
                                         <span class="menu-title">
                                                 <strong>政策关系全貌</strong>
@@ -252,7 +252,7 @@
 
                                 <!--Menu list item-->
                                 <li>
-                                    <a href="{{ url_for('qa_system') }}">
+                                    <a href="/qa_system">
                                         <i class="fa fa-question-circle" style="width:24px"></i>
                                         <span class="menu-title">政策关系问答</span>
 
@@ -271,7 +271,7 @@
 
                                 <!--Menu list item-->
                                 <li>
-                                    <a href="{{ url_for('edit_relation') }}">
+                                    <a href="/edit_relation">
                                         <i class="fa fa-map" style="width:24px"></i>
                                         <span class="menu-title">政策关系增删</span>
 
@@ -402,7 +402,7 @@
 <script>
     function search() {
 
-        $.getJSON('/search_name', {
+        $.getJSON('http://127.0.0.1:8000/search_name', {
             name: $("#search").val(),
 
         }, function (json) {
@@ -421,7 +421,7 @@
 
     $(".col-lg-4 a").click(function () {
 
-        $.getJSON('/search_name', {
+        $.getJSON('http://127.0.0.1:8000/search_name', {
             name: $(this).attr("data"),
 
         }, function (json) {
