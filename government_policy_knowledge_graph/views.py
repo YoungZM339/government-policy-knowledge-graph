@@ -46,7 +46,7 @@ def search_name(request):
     return JsonResponse(json_data)
 
 
-def search_all_objects():
+def search_all_objects(request):
     json_data = query_all_objects()
     return JsonResponse(json_data)
 
@@ -56,9 +56,7 @@ def add_relation(request):
     obj1 = request_data.get('obj1')
     obj2 = request_data.get('obj2')
     relation = request_data.get('relation')
-    cate1 = request_data.get('cate1')
-    cate2 = request_data.get('cate2')
-    data = [obj1, obj2, relation, cate1, cate2]
+    data = [obj1, obj2, relation]
     json_data = add_relation_graph(data)
     return JsonResponse(json_data)
 
@@ -66,5 +64,6 @@ def add_relation(request):
 def del_relation(request):
     request_data = request.GET
     obj = request_data.get('obj')
-    del_object(obj)
-    return JsonResponse([{"code": 1}])
+    print(obj)
+    json_data = del_object(obj)
+    return JsonResponse(json_data)
