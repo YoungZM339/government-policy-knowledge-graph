@@ -26,8 +26,6 @@ urlpatterns = [
     path("all_relation/", views.all_relation, name="all_relation"),
     path("edit_relation/", views.edit_relation, name="edit_relation"),
     path("display_policy_content/", views.display_policy_content, name="display_policy_content"),
-    path("get_profile/", views.get_profile),
-    path("qa_system_answer/", views.qa_system_answer),
     path("search_name/", views.search_name),
     path("search_all_objects/", views.search_all_objects),
     path("add_relation/", views.add_relation),

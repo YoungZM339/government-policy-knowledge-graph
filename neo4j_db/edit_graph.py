@@ -1,5 +1,4 @@
 from neo4j_db.config import graph
-from content_functions_dir.show_profile import get_profile
 import codecs
 import os
 import json
@@ -14,7 +13,7 @@ def query(keyword: str):
     )
     data = list(data)
     print(data)
-    return get_json_data(data)
+    return get_echarts_json_data(data)
 
 
 def query_content(name: str):
@@ -30,7 +29,7 @@ def query_all_objects():
         "match(p) - [r]->(n)return p.Name, r.relation, n.Name"
     )
     data = list(data)
-    return get_json_data(data)
+    return get_echarts_json_data(data)
 
 
 def del_object(name: str):
@@ -41,7 +40,7 @@ def del_object(name: str):
     return return_data
 
 
-def get_json_data(input_data):
+def get_echarts_json_data(input_data):
     json_data = {'data': [], "links": []}
     name_data = []
 
@@ -65,37 +64,6 @@ def get_json_data(input_data):
         json_data['links'].append(link_item)
 
     return json_data
-
-
-def get_qa_system_answer(array):
-    data_array = []
-    for i in range(len(array) - 2):
-        if i == 0:
-            name = array[0]
-        else:
-            name = data_array[-1]['p.Name']
-        data = graph.run(
-            "match(p)-[r:%s{relation: '%s'}]->(n:Policy{Name:'%s'}) return  p.Name,n.Name,r.relation" % (
-                array[i + 1], array[i + 1], name)
-        )
-
-        data = list(data)
-        print(data)
-        data_array.extend(data)
-
-        print("===" * 36)
-    with open("./content_functions_dir/images/" + "%s.jpg" % (str(data_array[-1]['p.Name'])), "rb") as image:
-        base64_data = base64.b64encode(image.read())
-        b = str(base64_data)
-
-    return [get_json_data(data_array), get_profile(str(data_array[-1]['p.Name'])), b.split("'")[1]]
-
-
-def get_answer_profile(name):
-    with open("./content_functions_dir/images/" + "%s.jpg" % (str(name)), "rb") as image:
-        base64_data = base64.b64encode(image.read())
-        b = str(base64_data)
-    return [get_profile(str(name)), b.split("'")[1]]
 
 
 def add_relation_graph(data):

@@ -90,23 +90,24 @@
             <!--===================================================-->
             <div id="page-content"><h4 class="text-main pad-btm bord-btm">政策关系可视化</h4>
                 <div class="row">
-                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6"><h3>政策智能知识图谱</h3></div>
                     <div class="col-lg-2"></div>
                     <div class="col-lg-4">
                         <div class="input-group">
-                            <label for="search"></label><input type="text" id="search" class="form-control input-lg"
-                                                               placeholder="请输入你要检索的名字...">
+                            <label for="search"></label>
+                            <input type="text" id="search" name="name"
+                                   class="form-control input-lg"
+                                   placeholder="请输入你要检索的名字...">
                             <span class="input-group-addon btn btn-mint" onclick="search()">搜索</span></div>
                     </div>
                 </div>
                 <div class="row" style="height: 40px;"></div>
                 <div class="row">
-                    {#知识图谱系统注释：关系图将在此呈现#}
-                    <div class="col-lg-8" style="height: 400px;" id="relation_graph_html_element">
+                    <div class="col-lg-8" style="height: 800px;" id="relation_graph_html_element">
                     </div>
                     <div class="col-lg-2"></div>
-                    {#知识图谱系统注释：关键词墙面#}
                     <div class="col-lg-4" id="tagsList">
+                        <a href="#" data="营商环境">营商环境</a>
                         <a href="#" data="教育">教育</a>
                         <a href="#" data="交通">交通</a>
                         <a href="#" data="养老">养老</a>
@@ -122,11 +123,8 @@
                     </div>
                 </div>
             </div>
-            <!--===================================================-->
-            <!--End page content--></div>
-        <!--===================================================-->
-        <!--END CONTENT CONTAINER--><!--MAIN NAVIGATION-->
-        <!--===================================================-->
+        </div>
+
         <nav id="mainnav-container">
             <div id="mainnav"><!--Menu-->
                 <!--================================-->
@@ -139,14 +137,14 @@
                                     <a href="/search">
                                         <i class="fa fa-search" style="width:24px"></i>
                                         <span class="menu-title">
-<strong>检索政策关系</strong>
-</span></a></li>
+                                        <strong>检索政策关系</strong>
+                                        </span></a></li>
                                 <li>
                                     <a href="/all_relation">
                                         <i class="fa fa-pie-chart" style="width:24px"></i>
                                         <span class="menu-title">
-<strong>政策关系全貌</strong>
-</span></a></li>
+                                        <strong>政策关系全貌</strong>
+                                        </span></a></li>
                                 <!--Menu list item-->
                                 <li class="list-divider"></li><!--Category name-->
                                 <li class="list-header">问答系统</li><!--Menu list item-->
@@ -169,128 +167,111 @@
                 <!--================================-->
                 <!--End menu--></div>
         </nav>
-        <!--===================================================-->
-        <!--END MAIN NAVIGATION--></div><!-- FOOTER -->
-    <!--===================================================-->
-    <footer id="footer"><p class="pad-lft">Copyright&#0169; 河南工业大学人工智能与大数据学院 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;All
-        Rights
-        Reserved </p></footer>
-    <!--===================================================-->
-    <!-- END FOOTER --><!-- SCROLL PAGE BUTTON -->
-    <!--===================================================-->
-    <button class="scroll-top btn">
-        <i class="pci-chevron chevron-up"></i>
-    </button>
-    <!--===================================================-->
-</div>
-<!--===================================================-->
-<!-- END OF CONTAINER -->
-<script>
-    const myChart = echarts.init(document.getElementById("relation_graph_html_element"));
-    window.onresize = function () {
-        myChart.resize();
-    }
-    $.ajaxSetup({async: false});
-    myChart.showLoading();
-    myChart.hideLoading();
-    option = {
-        title: {
-            text: '政策智能知识关系图',
-            textStyle: {
-                fontsize: "Microsoft YaHei",
-                fontWeight: "bold",
-            }
-        },
-        animationDurationUpdate: 1500,
-        animationEasingUpdate: 'quinticInOut',
-        legend: {
-            x: "center",
-            show: true,
-        },
-        series: [
-            {
-                type: 'graph',
-                layout: 'force',
-                symbolSize: 50,
-                edgeSymbol: ['circle', 'arrow'],
-                edgeSymbolSize: [4, 4],
-                edgeLabel: {
-                    normal: {
-                        show: true,
-                        textStyle: {
-                            fontSize: 10
-                        },
-                        formatter: "{c}"
-                    }
-                },
-                force: {
-                    repulsion: 2500,
-                    edgeLength: [10, 100]
-                },
-                focusNodeAdjacency: true,
-                draggable: true,
-                roam: true,
-                label: {
-                    normal: {
-                        show: true,
-                        textStyle: {
-                            fontSize: 10,
-                            color: "#000000",
-                        },
-                    }
-                },
-                tooltip: {
-                    formatter: function (node) { // 区分连线和节点，节点上额外显示其他数字
-                        if (!node.value) {
-                            return node.data.name;
-                        } else {
-                            return node.data.name + ":" + node.data.showNum;
-                        }
-                    },
-                },
-                lineStyle: {
-                    normal: {
-                        opacity: 0.9,
-                        width: 1,
-                        curveness: 0.3
-                    }
-                },
-// progressiveThreshold: 700,
-                nodes: [],
-                links: [],
-            }
-        ]
-    };
-    myChart.on('click', function (params) {
-        window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
-    });
-</script>
-<script>
-    function search() {
-        $.getJSON('http://127.0.0.1:8000/search_name', {
-            name: $("#search").val(),
-        }, function (json) {
-            option.series[0].nodes = json.data.map(function (node, idx) {
-                node.id = idx;
-                return node;
-            });
-            option.series[0].links = json.links;
-            myChart.setOption(option, true);
-        });
-    }
 
-    $(".col-lg-4 a").click(function () {
-        $.getJSON('http://127.0.0.1:8000/search_name', {
-            name: $(this).attr("data"),
-        }, function (json) {
-            option.series[0].nodes = json.data.map(function (node, idx) {
-                node.id = idx;
-                return node;
+        <footer id="footer"><p class="pad-lft">Copyright&#0169; 河南工业大学人工智能与大数据学院 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;All
+            Rights
+            Reserved </p></footer>
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+        <script>
+            const myChart = echarts.init(document.getElementById("relation_graph_html_element"));
+            window.onresize = function () {
+                myChart.resize();
+            }
+            $.ajaxSetup({async: false});
+            myChart.showLoading();
+            myChart.hideLoading();
+            option = {
+                animationDurationUpdate: 1500,
+                animationEasingUpdate: 'quinticInOut',
+                legend: {
+                    x: "center",
+                    show: true,
+                },
+                series: [
+                    {
+                        type: 'graph',
+                        layout: 'force',
+                        symbolSize: 100,
+                        edgeSymbol: ['circle', 'arrow'],
+                        edgeSymbolSize: [4, 4],
+                        edgeLabel: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: 16
+                                },
+                                formatter: "{c}"
+                            }
+                        },
+                        force: {
+                            repulsion: 2500,
+                            edgeLength: [10, 100]
+                        },
+                        focusNodeAdjacency: true,
+                        draggable: true,
+                        roam: true,
+                        label: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: 16,
+                                    color: "#000000",
+                                },
+                            }
+                        },
+                        tooltip: {
+                            formatter: function (node) { // 区分连线和节点，节点上额外显示其他数字
+                                if (!node.value) {
+                                    return node.data.name;
+                                } else {
+                                    return node.data.name + ":" + node.data.showNum;
+                                }
+                            },
+                        },
+                        lineStyle: {
+                            normal: {
+                                opacity: 0.9,
+                                width: 1,
+                                curveness: 0.3
+                            }
+                        },
+                        nodes: [],
+                        links: [],
+                    }
+                ]
+            };
+            myChart.on('click', function (params) {
+                window.open('http://127.0.0.1:8000/display_policy_content?name=' + encodeURIComponent(params.name));
             });
-            option.series[0].links = json.links;
-            myChart.setOption(option, true);
-        })
-    });
-</script>
+        </script>
+        <script>
+            function search() {
+                $.getJSON('http://127.0.0.1:8000/search_name', {
+                    name: $("#search").val(),
+                }, function (json) {
+                    option.series[0].nodes = json.data.map(function (node, idx) {
+                        node.id = idx;
+                        return node;
+                    });
+                    option.series[0].links = json.links;
+                    myChart.setOption(option, true);
+                });
+            }
+
+            $(".col-lg-4 a").click(function () {
+                $.getJSON('http://127.0.0.1:8000/search_name', {
+                    name: $(this).attr("data"),
+                }, function (json) {
+                    option.series[0].nodes = json.data.map(function (node, idx) {
+                        node.id = idx;
+                        return node;
+                    });
+                    option.series[0].links = json.links;
+                    myChart.setOption(option, true);
+                })
+            });
+        </script>
 </body>
 </html>

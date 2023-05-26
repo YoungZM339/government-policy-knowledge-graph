@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-<div id="container" class="effect aside-float aside-bright mainnav-sm"><!--NAVBAR-->
+<div id="container" class="effect aside-float aside-bright mainnav-lg"><!--NAVBAR-->
     <!--===================================================-->
     <header id="navbar">
         <div id="navbar-container" class="boxed"><!--Brand logo & name-->
@@ -79,9 +79,9 @@
         <div id="content-container"><!--Page content-->
             <!--===================================================-->
             <div id="page-content">
-                <div class="row" style="height: 800px;" id="guanxi">
+                <div class="row" style="height: 800px;" id="graph_relations_element">
                     <script type="text/javascript">
-                        const myChart = echarts.init(document.getElementById("guanxi"));
+                        const myChart = echarts.init(document.getElementById("graph_relations_element"));
                         window.onresize = function () {
                             myChart.resize();
                         }
@@ -96,7 +96,7 @@
                             title: {
                                 text: '政策智能知识关系图',
                                 textStyle: {
-                                    fontsize: "Microsoft YaHei",
+                                    fontsize: 16,
                                     fontWeight: "bold",
                                 }
                             },
@@ -110,14 +110,14 @@
                                 {
                                     type: 'graph',
                                     layout: 'force',
-                                    symbolSize: 45,
+                                    symbolSize: 100,
                                     edgeSymbol: ['circle', 'arrow'],
                                     edgeSymbolSize: [4, 4],
                                     edgeLabel: {
                                         normal: {
                                             show: true,
                                             textStyle: {
-                                                fontSize: 10
+                                                fontSize: 16
                                             },
                                             formatter: "{c}"
                                         }
@@ -133,7 +133,8 @@
                                         normal: {
                                             show: true,
                                             textStyle: {
-                                                fontSize: 12
+                                                fontSize: 16,
+                                                color: "#000000",
                                             },
                                         }
                                     },
@@ -153,7 +154,6 @@
                                             curveness: 0.3
                                         }
                                     },
-// progressiveThreshold: 700,
                                     nodes: rela.data.map(function (node, idx) {
                                         node.id = idx;
                                         return node;
@@ -163,14 +163,14 @@
                             ]
                         };
                         myChart.setOption(option, true);
+                        myChart.on('click', function (params) {
+                            window.open('http://127.0.0.1:8000/display_policy_content?name=' + encodeURIComponent(params.name));
+                        });
                     </script>
                 </div>
             </div>
-            <!--===================================================-->
-            <!--End page content--></div>
-        <!--===================================================-->
-        <!--END CONTENT CONTAINER--><!--MAIN NAVIGATION-->
-        <!--===================================================-->
+
+        </div>
         <nav id="mainnav-container">
             <div id="mainnav"><!--Menu-->
                 <!--================================-->
@@ -183,14 +183,14 @@
                                     <a href="/search">
                                         <i class="fa fa-search" style="width:24px"></i>
                                         <span class="menu-title">
-<strong>检索政策关系</strong>
-</span></a></li>
+                                        <strong>检索政策关系</strong>
+                                        </span></a></li>
                                 <li>
                                     <a href="/all_relation">
                                         <i class="fa fa-pie-chart" style="width:24px"></i>
                                         <span class="menu-title">
-<strong>政策关系全貌</strong>
-</span></a></li>
+                                        <strong>政策关系全貌</strong>
+                                        </span></a></li>
                                 <!--Menu list item-->
                                 <li class="list-divider"></li><!--Category name-->
                                 <li class="list-header">问答系统</li><!--Menu list item-->
@@ -214,19 +214,12 @@
                 <!--End menu--></div>
         </nav>
         <!--===================================================-->
-        <!--END MAIN NAVIGATION--></div><!-- FOOTER -->
-    <!--===================================================-->
-    <footer id="footer"><p class="pad-lft">Copyright&#0169; 河南工业大学人工智能与大数据学院 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;All
-        Rights
-        Reserved </p></footer>
-    <!--===================================================-->
-    <!-- END FOOTER --><!-- SCROLL PAGE BUTTON -->
-    <!--===================================================-->
-    <button class="scroll-top btn">
-        <i class="pci-chevron chevron-up"></i>
-    </button>
-    <!--===================================================-->
-</div>
-<!--===================================================-->
-<!-- END OF CONTAINER --></body>
+        <footer id="footer"><p class="pad-lft">Copyright&#0169; 河南工业大学人工智能与大数据学院 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;All
+            Rights
+            Reserved </p></footer>
+
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+</body>
 </html>

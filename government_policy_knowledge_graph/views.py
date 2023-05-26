@@ -2,7 +2,7 @@ import json
 
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.shortcuts import render
-from neo4j_db.edit_graph import query, get_qa_system_answer, get_answer_profile, add_relation_graph, query_all_objects, \
+from neo4j_db.edit_graph import query, add_relation_graph, query_all_objects, \
     del_object, query_content
 from qa_system.ltp import get_target_array
 
@@ -25,20 +25,6 @@ def all_relation(request):
 
 def edit_relation(request):
     return render(request, 'edit_relation.html')
-
-
-def get_profile(request):
-    request_data = request.GET
-    name = request_data.get('character_name')
-    json_data = get_answer_profile(name)
-    return JsonResponse(json_data)
-
-
-def qa_system_answer(request):
-    request_data = request.GET
-    question = request_data.get('name')
-    json_data = get_qa_system_answer(get_target_array(str(question)))
-    return JsonResponse(json_data)
 
 
 def search_name(request):
