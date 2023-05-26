@@ -1,7 +1,9 @@
+import json
+
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.shortcuts import render
 from neo4j_db.edit_graph import query, get_qa_system_answer, get_answer_profile, add_relation_graph, query_all_objects, \
-    del_object
+    del_object, query_content
 from qa_system.ltp import get_target_array
 
 
@@ -64,6 +66,18 @@ def add_relation(request):
 def del_relation(request):
     request_data = request.GET
     obj = request_data.get('obj')
-    print(obj)
     json_data = del_object(obj)
     return JsonResponse(json_data)
+
+
+def display_policy_content(request):
+    request_data = request.GET
+    name = request_data["name"]
+    # content_data = {"policy_content": query_content(name)}
+    with open("./raw_data/content.json", encoding='utf-8') as f:
+        json_data = json.load(f)
+        for i in json_data["data"]:
+            if i["name"] == name:
+                content_data = {"policy_content": i["content"]}
+                break
+    return render(request, 'policy_content.html', content_data)

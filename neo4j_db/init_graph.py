@@ -1,3 +1,5 @@
+import json
+
 from py2neo import Graph, Node, Relationship
 from config import graph
 
@@ -33,3 +35,11 @@ with open("./raw_data/category.txt", encoding='utf-8') as f:
         print(category_array)
         graph.run("MATCH (p:Policy { Name: '%s' })\
         SET p.Category = '%s'" % (category_array[0], category_array[1]))
+
+with open("./raw_data/content.json", encoding='utf-8') as f:
+    print("开始添加文章内容")
+    json_data = json.load(f)
+    for i in json_data["data"]:
+        print("正在添加：" + i["name"])
+        graph.run("MATCH (p:Policy { Name: '%s' })\
+            SET p.Content = '%s'" % (i["name"], i["content"]))

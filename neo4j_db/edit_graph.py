@@ -17,6 +17,14 @@ def query(keyword: str):
     return get_json_data(data)
 
 
+def query_content(name: str):
+    content_data = graph.run(
+        "match(n:Policy{Name:'%s'}) return  n.Content" % name
+    )
+    for i in content_data:
+        return i["n.Content"]
+
+
 def query_all_objects():
     data = graph.run(
         "match(p) - [r]->(n)return p.Name, r.relation, n.Name"
