@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,31 +20,33 @@
     <script src="../static/js/echarts.min.js"></script>
     <script src="../static/js/tags.js"></script>
     <script src="../static/js/nifty-demo.min.js"></script>
-    <style type="text/css">        #tagsList {
-        position: relative;
-        width: 250px;
-        height: 250px;
-    }
+    <style type="text/css">
+        #tagsList {
+            position: relative;
+            width: 250px;
+            height: 250px;
+        }
 
-    #tagsList a {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        font-family: Microsoft YaHei;
-        color: gray;
-        font-weight: bold;
-        text-decoration: none;
-        padding: 3px 6px;
-    }
+        #tagsList a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-family: Microsoft YaHei, serif;
+            color: gray;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 3px 6px;
+        }
 
-    #tagsList a:hover {
-        color: #249e92;
-        letter-spacing: 2px;
-    }
+        #tagsList a:hover {
+            color: #249e92;
+            letter-spacing: 2px;
+        }
 
-    #search:focus {
-        border: 1px solid #249e92;
-    }    </style>
+        #search:focus {
+            border: 1px solid #249e92;
+        }
+    </style>
 </head>
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg">
@@ -61,6 +63,7 @@
                 </ul>
                 <ul class="nav navbar-top-links pull-left"><h4>政靠“谱”:基于图嵌入的政策智能知识图谱推荐系统</h4></ul>
             </div>
+        </div>
     </header>
     <div class="boxed">
         <div id="content-container">
@@ -116,36 +119,39 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </nav>
         <footer id="footer"><p class="pad-lft">Copyright&#0169; 河南工业大学人工智能与大数据学院 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;All
             Rights Reserved </p></footer>
         <button class="scroll-top btn"><i class="pci-chevron chevron-up"></i></button>
-        <script type="text/javascript">
-            function add() {
-                $.getJSON('/add_relation', {
-                    obj1: $("#edit_content_obj1").val(),
-                    obj2: $("#edit_content_obj2").val(),
-                    relation: $("#edit_content_relation").val(),
-                }, function (json) {
-                    if (json.code == 1) {
-                        $("#content_tips").text("已经成功添加！");
-                    } else {
-                        $("#content_tips").text("添加失败！");
-                    }
-                });
+    </div>
+</div>
+<script type="text/javascript">
+    function add() {
+        $.getJSON('/add_relation', {
+            obj1: $("#edit_content_obj1").val(),
+            obj2: $("#edit_content_obj2").val(),
+            relation: $("#edit_content_relation").val(),
+        }, function (json) {
+            if (json.code == 1) {
+                $("#content_tips").text("已经成功添加！");
+            } else {
+                $("#content_tips").text("添加失败！");
             }
+        });
+    }
 
-            function del() {
-                $.getJSON('/del_relation', {
-                    obj: $("#del_content_obj").val(),
-                }, function (json) {
-                    if (json.code == 1) {
-                        $("#content_tips").text("已经成功删除！");
-                    } else {
-                        $("#content_tips").text("删除失败！");
-                    }
-                });
+    function del() {
+        $.getJSON('/del_relation', {
+            obj: $("#del_content_obj").val(),
+        }, function (json) {
+            if (json.code == 1) {
+                $("#content_tips").text("已经成功删除！");
+            } else {
+                $("#content_tips").text("删除失败！");
             }
-        </script>
+        });
+    }
+</script>
 </body>
 </html>
