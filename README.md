@@ -7,3 +7,13 @@
 - 创建Neo4j数据库:数据库名称neo4j,用户名neo4j,密码12345678,你也可以在neo4j_db/config.py修改对应配置
 - 初始化Neo4j数据库:在项目根目录执行python ./neo4j_db/init_graph.py,这将会从raw_data/中各个文件导入对象、对象各个属性和关系
 - 启动Django:python manage.py runserver
+
+## 可能遇到的问题
+
+### ImportError: Settings cannot be imported, because environment variable DJANGO_SETTINGS_MODULE is undefined.
+
+请您检查是否已经设置环境变量：
+
+```
+DJANGO_SETTINGS_MODULE=government_policy_knowledge_graph.settings
+```
